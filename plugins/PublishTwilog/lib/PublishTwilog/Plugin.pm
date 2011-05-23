@@ -8,13 +8,13 @@ use Data::Dumper;
 
 ## DEBUC CODE
 sub doLog {
-    my ($msg, $class) = @_;
+    my ( $msg, $class ) = @_;
     return unless defined($msg);
     use MT::Log;
     my $log = MT::Log->new;
     $log->message($msg);
-	$log->level(MT::Log::DEBUG());
-	$log->class($class) if $class;
+    $log->level( MT::Log::DEBUG() );
+    $log->class($class) if $class;
     $log->save or die $log->errstr;
 }
 
@@ -22,13 +22,9 @@ sub plugin {
     return MT->component('PublishTwilog');
 }
 
-sub do_tasks {
-	doLog("Run Publish Twilog Test");
-}
-
 sub _hdlr_auto_twilog_entry {
     my $blog_iter = MT::Blog->load_iter();
-	my $plugin = plugin();
+    my $plugin    = plugin();
     while ( my $blog = $blog_iter->() ) {
         if ( my $blog_id =
             $plugin->get_config_value( 'blogid', 'blog:' . $blog->id ) )
@@ -39,8 +35,8 @@ sub _hdlr_auto_twilog_entry {
 }
 
 sub _twilog_entry {
-    my $blog = shift;
-	my $plugin = plugin();
+    my $blog    = shift;
+    my $plugin  = plugin();
     my $blog_id = $plugin->get_config_value( 'blogid', 'blog:' . $blog->id );
     my $username =
       $plugin->get_config_value( 'twitter_username', 'blog:' . $blog_id );
@@ -109,16 +105,18 @@ sub _twilog_entry {
 
 sub get_data {
     my ( $username, $display, $start, $end ) = @_;
-	my $plugin = plugin();
+    my $plugin  = plugin();
     my $pattern = qq/"d$end">(.*?)<div class="p-link">/;
     require MT::I18N;
     my $charset = MT::ConfigMgr->instance->PublishCharset;
-    my $ua = MT->new_ua( { agent => join( "/", $plugin->name, $plugin->version ) } );
+    my $ua =
+      MT->new_ua( { agent => join( "/", $plugin->name, $plugin->version ) } );
     my $url =
         ( $display == '1' ) ? 'http://twilog.org/' . $username . '/norep'
       : ( $display == '2' ) ? 'http://twilog.org/' . $username . '/nomen'
       :                       'http://twilog.org/' . $username;
     my $res = $ua->get($url);
+
     if ( $res->is_success ) {
         my $html = $res->content;
         $html =~ s/\n//g;
@@ -129,14 +127,13 @@ sub get_data {
     else {
         MT->log(
             {
-                message =>
-		$plugin->translate('as_wget_error')
+                message => $plugin->translate('as_wget_error')
                   . $res->status_line,
                 class => 'system',
                 level => MT::Log::ERROR(),
             }
         );
-        die $plugin->translate('as_wget_error'). $res->status_line;
+        die $plugin->translate('as_wget_error') . $res->status_line;
     }
 }
 1;
