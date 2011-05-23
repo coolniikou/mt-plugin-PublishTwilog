@@ -1,0 +1,39 @@
+id: 'PublishTwilog'
+key: 'publishtwilog'
+name: 'PublishTwilog'
+version: 0.6
+description: '<MT_TRANS phrase="as_DESCRIPTION">'
+doc_link: 'https://github.com/coolniikou/mt-plugin-PublishTwilog'
+author_name: '<MT_TRANS phrase="as_AUTHOR_NAME">'
+author_link: 'http://friendfeed.com/coolniikou/'
+l10n_class: 'PublishTwilog::L10N'
+blog_config_template: 'blog_config.tmpl'
+settings:
+  twitter_username:
+    default: "your_twitter_username_here"
+    scope: blog
+  blogid:
+    default: 1
+    scope: blog
+  author_id:
+    default: 1
+    scope: blog
+  category_id:
+    default: 1
+    scope: blog
+  status:
+    default: 1
+    scope: blog
+  title:
+    default: "today tweet"
+    scope: blog
+  display:
+    default: ""
+    scope: blog
+
+tasks:
+    PublishTwilog:
+        label: Do publish twilog
+        frequency: 120
+        code: $PublishTwilog::PublishTwilog::Plugin::_hdlr_auto_twilog_entry
+
