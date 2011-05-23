@@ -1,11 +1,11 @@
 #About the PublishTwilog plugin for Movable Type
-PublishTwilog is a plugin for Movable Type provides tweet data from Twilog(web-service : http://twilog.org/);.  
+PublishTwilog is a plugin for Movable Type provides tweet data from Twilog(web-service : http://twilog.org/ )
 
 PublishTwilog pluginは、Twilogサービスから昨日（１日分）のTweetデータを取得し、エントリーとして自動で記事投稿します。  
-定期(毎日)にスケジュールタスク(\*1)実行設定することで昨日のTweetを自動投稿できるようになります。
+定期(毎日)にスケジュールタスク(\*1) 実行設定することで昨日のTweetを自動投稿できるようになります。
 
 
-####\*1スケジュールタスクの実行
+####\*1: スケジュールタスクの実行
 - cron等で定期で$MT_HOME/tools/run-periodic-tasksを実行する(linux or Unix)  
 - タスク・スケジューラで$MT_HOME/tools/run-periodic-tasksを実行する(windows)  
 - ログフィードを定期的に取得するようにする(	フィードリーダ等で定期的に読み込むように設定する)  
